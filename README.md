@@ -11,7 +11,9 @@ to avoid excessive VPS resource consumption...
 
 leaving a modern and lightweight appearance.
 
-FULL VERSION = https://php-helper-1--dstarspain.replit.app/
+FULL VERSION =
+
+https://php-helper-1--dstarspain.replit.app/
 
 PUBLISHED VERSION =
 
