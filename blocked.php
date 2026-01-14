@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="60"/>
+    <meta name="author" content="EA C4FM Spain">
+    <meta name="author" content="EA C4FM Spain">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-card: #0f1629;
+            --bg-header: #141c2f;
+            --bg-elevated: #1a2342;
+            --text-primary: #e2e8f0;
+            --text-secondary: #64748b;
+            --text-muted: #475569;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-yellow: #eab308;
+            --accent-purple: #a855f7;
+            --border-color: #1e3a5f;
+            --glow-blue: rgba(59, 130, 246, 0.4);
+            --glow-red: rgba(239, 68, 68, 0.4);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(ellipse at 20% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        .navbar {
+            background: linear-gradient(180deg, var(--bg-header) 0%, var(--bg-card) 100%) !important;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        .navbar-brand img { max-height: 100px; width: auto; filter: drop-shadow(0 4px 20px rgba(59, 130, 246, 0.5)); }
+        @media (max-width: 576px) { .navbar-brand img { max-height: 70px; } .navbar { padding: 0.5rem 1rem; } }
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.6rem 1.2rem !important;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover { color: var(--accent-cyan) !important; background: rgba(6, 182, 212, 0.1); }
+        .nav-link.active {
+            color: var(--accent-red) !important;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(168, 85, 247, 0.1) 100%);
+            box-shadow: 0 0 15px var(--glow-red);
+        }
+        .page-header { padding: 1.5rem 0 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-red) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .counter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            box-shadow: 0 0 20px var(--glow-red);
+        }
+        .counter-number { font-size: 1.75rem; font-weight: 700; color: var(--accent-red); text-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+        .counter-label { font-size: 0.85rem; color: var(--text-secondary); }
+        .table-container {
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .table { margin: 0; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; }
+        .table thead th {
+            background: linear-gradient(180deg, var(--bg-header) 0%, var(--bg-elevated) 100%);
+            color: var(--text-secondary);
+            font-weight: 600;
+            border: none;
+            padding: 1rem 0.6rem;
+            white-space: nowrap;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .table tbody td { border-color: rgba(30, 58, 95, 0.5); padding: 0.75rem 0.6rem; vertical-align: middle; }
+        .table tbody tr:hover { background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, transparent 100%); }
+        .callsign { font-weight: 700; font-size: 1.1rem; color: var(--accent-red); text-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
+        .blocked-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(239, 68, 68, 0.1) 100%);
+            color: #f87171;
+            box-shadow: 0 0 10px var(--glow-red);
+        }
+        .reason-badge {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(234, 179, 8, 0.1) 100%);
+            color: #facc15;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            border: 1px solid rgba(234, 179, 8, 0.2);
+        }
+        .flag-icon { width: 28px; height: 20px; margin-right: 8px; border-radius: 4px; vertical-align: middle; box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        footer {
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        footer strong { color: var(--text-primary); }
+        .btn-footer {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.5rem 0.25rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-footer:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4); color: white; }
+        .mobile-card {
+            display: none;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), -5px 0 15px rgba(239, 68, 68, 0.1);
+        }
+        .mobile-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); }
+        .mobile-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(30, 58, 95, 0.5); }
+        .mobile-card-call { font-size: 1.4rem; font-weight: 700; color: var(--accent-red); }
+        .mobile-card-call .flag-icon { width: 32px; height: 22px; }
+        .mobile-card-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(30, 58, 95, 0.3); font-size: 1rem; }
+        .mobile-card-row:last-child { border-bottom: none; }
+        .mobile-card-label { color: var(--text-secondary); }
+        .mobile-card-value { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; }
+        @media (max-width: 992px) { .table-container { display: none; } .mobile-card { display: block; } }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.4));
+        }
+        .empty-state-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+        .empty-state-text {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="logo.png" alt="EA C4FM Spain"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                 <li class="nav-item"><a class="nav-link active" href="./main.php">Ultimos Escuchados</a></li>
+                <li class="nav-item"><a class="nav-link" href="./linked.php">Conectados</a></li>
+                <li class="nav-item"><a class="nav-link" href="./blocked.php">Bloqueados</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-3 px-lg-4">
+    <div class="page-header">
+        <h1 class="page-title">Estaciones Bloqueadas</h1>
+<?php
+$db = new SQLite3('/opt/pysfreflector2/collector4.db');
+$totalBlocked = $db->querySingle('SELECT COUNT(*) FROM blocked');
+?>
+        
+
+
+    </div>
+
+<?php if ($totalBlocked == 0): ?>
+    <div class="table-container">
+        <div class="empty-state">
+            <div class="empty-state-icon">✓</div>
+            <h3 class="empty-state-title">Lista Vacia!</h3>
+            <p class="empty-state-text">No hay indicativos bloqueados en este momento</p>
+        </div>
+    </div>
+<?php else: ?>
+    
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Callsign</th>
+                        <th>Blocked At</th>
+                        <th>Reason</th>
+                        <th>Release Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+<?php
+function getCountryFlag($call) {
+    $prefixes = [
+        'EA' => 'es', 'EB' => 'es', 'EC' => 'es', 'ED' => 'es', 'EE' => 'es', 'EF' => 'es', 'EG' => 'es', 'EH' => 'es',
+        'I' => 'it', 'IK' => 'it', 'IU' => 'it', 'IW' => 'it', 'IZ' => 'it',
+        'F' => 'fr', 'G' => 'gb', 'M' => 'gb', '2E' => 'gb',
+        'DL' => 'de', 'DO' => 'de', 'DA' => 'de', 'DB' => 'de', 'DC' => 'de', 'DD' => 'de', 'DF' => 'de', 'DG' => 'de', 'DH' => 'de', 'DJ' => 'de', 'DK' => 'de',
+        'PA' => 'nl', 'PD' => 'nl', 'PE' => 'nl', 'PH' => 'nl', 'PI' => 'nl',
+        'ON' => 'be', 'HB' => 'ch', 'CT' => 'pt', 'CS' => 'pt',
+        'K' => 'us', 'W' => 'us', 'N' => 'us',
+        'VE' => 'ca', 'VA' => 'ca', 'VK' => 'au', 'ZL' => 'nz',
+        'JA' => 'jp', 'LU' => 'ar', 'PY' => 'br', 'CE' => 'cl', 'XE' => 'mx',
+        'OE' => 'at', 'OZ' => 'dk', 'OH' => 'fi', 'SM' => 'se', 'LA' => 'no', 'SP' => 'pl', 'OK' => 'cz', 'HA' => 'hu', 'YO' => 'ro', 'LZ' => 'bg', 'SV' => 'gr',
+        'UA' => 'ru', 'RU' => 'ru'
+    ];
+    $call = strtoupper(trim($call));
+    foreach ([3, 2, 1] as $len) { $prefix = substr($call, 0, $len); if (isset($prefixes[$prefix])) return $prefixes[$prefix]; }
+    return null;
+}
+
+$res = $db->query('SELECT * FROM blocked ORDER BY time DESC');
+$nr = 1;
+while ($row = $res->fetchArray()) {
+    $flag = getCountryFlag($row['call']);
+    $flagHtml = $flag ? "<img class='flag-icon' src='https://flagcdn.com/w40/{$flag}.png' alt='{$flag}'>" : "";
+    $reason = !empty($row['BR']) ? $row['BR'] : 'Rule violation';
+    $release = !empty($row['TR']) ? $row['TR'] : 'Pending';
+    echo "<tr>";
+    echo "<td>{$nr}</td>";
+    echo "<td>{$flagHtml}<span class='callsign'>{$row['call']}</span></td>";
+    echo "<td>{$row['time']}</td>";
+    echo "<td><span class='reason-badge'>⚠ {$reason}</span></td>";
+    echo "<td>{$release}</td>";
+    echo "</tr>";
+    ++$nr;
+}
+?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<?php
+$res = $db->query('SELECT * FROM blocked ORDER BY time DESC');
+$nr = 1;
+while ($row = $res->fetchArray()) {
+    $flag = getCountryFlag($row['call']);
+    $flagHtml = $flag ? "<img class='flag-icon' src='https://flagcdn.com/w40/{$flag}.png' alt='{$flag}'>" : "";
+    $reason = !empty($row['BR']) ? $row['BR'] : 'Rule violation';
+    $release = !empty($row['TR']) ? $row['TR'] : 'Pending';
+    echo "<div class='mobile-card'>";
+    echo "<div class='mobile-card-header'><span class='mobile-card-call'>{$flagHtml}{$row['call']}</span><span class='blocked-badge'>🚫 BLOCKED</span></div>";
+    echo "<div class='mobile-card-row'><span class='mobile-card-label'>Blocked At</span><span class='mobile-card-value'>{$row['time']}</span></div>";
+    echo "<div class='mobile-card-row'><span class='mobile-card-label'>Reason</span><span class='mobile-card-value'><span class='reason-badge'>⚠ {$reason}</span></span></div>";
+    echo "<div class='mobile-card-row'><span class='mobile-card-label'>Release</span><span class='mobile-card-value'>{$release}</span></div>";
+    echo "</div>";
+    ++$nr;
+}
+?>
+
+<?php endif; ?>
+</div>
+
+<footer>
+<?php
+$res = $db->query('SELECT * FROM reflector');
+$row = $res->fetchArray();
+echo "<p><strong>Reflector:</strong> #{$row['REF_ID']} &bull; <strong>Ver:</strong> {$row['ver']} &bull; <strong>Desc:</strong> {$row['REF_DESC']} &bull; <strong>APRS:</strong> {$row['APRS_EN']}</p>";
+echo "<p><strong>Active Streams:</strong> {$row['dgid_list']} &bull; <strong>Default:</strong> {$row['dgid_def']} &bull; <strong>Local:</strong> {$row['dgid_loc']}</p>";
+?>
+    <div style="margin-top: 0.75rem;">
+        <a class="btn-footer" href="<?php echo 'http://'.$row['web']; ?>">🌐 X-reflector</a>
+        <a class="btn-footer" href="<?php echo 'mailto:'.$row['contact']; ?>">✉️ Contacto</a>
+       <a class="btn-footer" echo "<a href='https://t.me/eac4fm'>Grupo De Telegram</a>
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">Developed by IA 2026 For pYSF3</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
