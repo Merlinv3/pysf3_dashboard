@@ -17,6 +17,6 @@ PUBLISHED VERSION =
 
 https://ea8ee.c4fm.es/
 
-https://andalucia.c4fm.es/
+https://andalucia.c4fm.es/ysf2/
 
 https://extremaduralink.ysf.es/
