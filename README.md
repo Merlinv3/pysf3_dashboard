@@ -13,4 +13,10 @@ leaving a modern and lightweight appearance.
 
 FULL VERSION = https://php-helper-1--dstarspain.replit.app/
 
-PUBLISHED VERSION = https://andalucia.c4fm.es/ysf2/main.php
+PUBLISHED VERSION =
+
+https://ea8ee.c4fm.es/
+
+https://andalucia.c4fm.es/
+
+https://extremaduralink.ysf.es/
