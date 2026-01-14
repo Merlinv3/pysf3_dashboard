@@ -13,4 +13,4 @@ leaving a modern and lightweight appearance.
 
 FULL VERSION = https://php-helper-1--dstarspain.replit.app/
 
-PUBLISHED VERSION = [https://github.com/Merlinv3/pysf3_dashboard/blob/main/Screenshot%202026-01-14%20at%2012-31-42%20EA%20C4FM%20SPAIN.png](https://github.com/Merlinv3/pysf3_dashboard/blob/main/Screenshot%202026-01-14%20at%2015-15-50%20EA%20C4FM%20SPAIN.png)
+PUBLISHED VERSION = https://andalucia.c4fm.es/ysf2/main.php
